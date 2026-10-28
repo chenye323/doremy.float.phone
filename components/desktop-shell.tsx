@@ -3,6 +3,7 @@
 import { Component, memo, useCallback, useEffect, useInsertionEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ErrorInfo, type ReactNode } from "react";
 
 import { updateStatusBarTone } from "@/lib/bg-tone";
+import { MOBILE_SHELL_MQ } from "@/lib/mobile-shell";
 import { startDiaryEntryTimerService, stopDiaryEntryTimerService } from "@/lib/diary-entry-timer-service";
 import { startFollowUpService, stopFollowUpService } from "@/lib/follow-up-service";
 import { startMomentsService, stopMomentsService } from "@/lib/moments-engine";
@@ -941,7 +942,7 @@ function useAndroidCaretKeyboardLift() {
       return;
     }
 
-    const mobileMq = window.matchMedia("(max-width: 500px) and (hover: none) and (pointer: coarse)");
+    const mobileMq = window.matchMedia(MOBILE_SHELL_MQ);
     const viewport = window.visualViewport;
     let focusedElement: HTMLElement | null = null;
     let raf = 0;
@@ -1053,7 +1054,7 @@ function useAndroidNativeKeyboardViewport() {
     if (!/Android/i.test(navigator.userAgent)) {
       return;
     }
-    const mobileMq = window.matchMedia("(max-width: 500px) and (hover: none) and (pointer: coarse)");
+    const mobileMq = window.matchMedia(MOBILE_SHELL_MQ);
     if (!mobileMq.matches) {
       return;
     }
