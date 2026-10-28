@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { ChatPluginBootstrap } from "@/components/chat-plugin-bootstrap";
 import { ChatReasoningVisibilityController } from "@/components/chat-reasoning-visibility-controller";
+import { ForceMobileEnforcer } from "@/components/force-mobile-enforcer";
 import { CSSImportEnhancer } from "@/components/css-import-enhancer";
 import { PWAManifestInjector } from "@/components/pwa-manifest-injector";
 import { PWARegistrar } from "@/components/pwa-registrar";
@@ -52,6 +53,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body>
+        <ForceMobileEnforcer />
         <PWAManifestInjector />
         <PWARegistrar />
         <CSSImportEnhancer />

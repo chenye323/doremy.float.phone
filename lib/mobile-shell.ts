@@ -107,3 +107,21 @@ export function writeShellModeOverride(mode: ShellModeOverride): void {
   else root.removeAttribute("data-force-mobile");
   applyShellZoom();
 }
+
+/** 客户端激活（hydration）后重新应用物理手机判定。
+ *  React 激活 <html> 时会重置其属性，把首屏内联脚本打的 data-force-mobile 抹掉，
+ *  导致"首屏满屏正常、随后变回桌面壳"。这里按当前模式重新判定并补回标记（不动 localStorage）。 */
+export function applyForceMobile(): void {
+  if (typeof window === "undefined") return;
+  try {
+    const root = document.documentElement;
+    const mqMatches = window.matchMedia(MOBILE_SHELL_MQ).matches;
+    const mode = readShellModeOverride();
+    const shouldForce = !mqMatches && (
+      mode === "phone" || (mode === "auto" && shellChannel() === "beta" && isPhysicallyPhone())
+    );
+    if (shouldForce) root.setAttribute("data-force-mobile", "1");
+    else root.removeAttribute("data-force-mobile");
+    applyShellZoom();
+  } catch { /* ignore */ }
+}
